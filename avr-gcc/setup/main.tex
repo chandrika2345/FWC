@@ -1,0 +1,25 @@
+We show how to control an led using AVR-GCC. AVR-GCC
+is a C compiler for the Atmega328p.
+\begin{enumerate}[label=\arabic*.,ref=\theenumi]
+\item Execute the following
+\begin{lstlisting}
+cd avr-gcc/setup/codes
+
+make
+\end{lstlisting}
+
+\item Now open \textbf{main.c}. Explain the following lines.
+\begin{lstlisting}
+    PORTB = ((0 <<  PB5));
+	_delay_ms(500);
+//turn led on
+    PORTB = ((1 <<  PB5));
+    _delay_ms(500);
+\end{lstlisting}
+\solution $((0 <<  PB5))$ writes 0 to pin 13 (PB5).  \_delay\_ms(500) introduces a delay of 500 ms.  
+\item Modify the above code to keep the led on.
+\item Repeat the above exercise to keep the led off.
+
+\end{enumerate}
+
+

@@ -1,0 +1,27 @@
+We show how to write a function in assembly and call it in a C program while programming the ATMega328P microcontroller in the Arduino.  This is done by controlling an LED. 
+%
+\begin{enumerate}[label=\arabic*.,ref=\theenumi]
+\item Execute 
+\begin{lstlisting}
+cd avr-gcc/gcc-assembly/codes
+make
+\end{lstlisting}
+\item Modify \textbf{main.c} and \textbf{Makefile} to turn the builtin led on.
+\item Repeat the above exercise to turn the LED off.
+\item Explain how the \textbf{disp\_led(0)} function is related to \textbf{Register R24} in \textbf{disp\_led} routine in \textbf{displedasm.S}.
+	\\
+\solution The function argument 0 in \textbf{disp\_led(0)} is passed on to R24 in the assembly routine for further operations.  Also, the registers R18-R24 are available for storing more function arguments according to the Table \ref{tab:avr-gcc/gcc-assembly/param_pass}.  More details are avilable in official ATMEL AT1886 reference.
+
+\begin{table}[H]
+\centering
+	\input{avr-gcc/gcc-assembly/figs/param_pass.tex}
+\caption{Relationship between Register in assembly and function argument in C}
+\label{tab:avr-gcc/gcc-assembly/param_pass}
+\end{table}
+
+\item Write an assembly routine for controlling the seven segment display and call it in a C program.
+\item Build a decade counter with \textbf{main.c} calling all functions from assembly routines.
+\end{enumerate}
+
+
+

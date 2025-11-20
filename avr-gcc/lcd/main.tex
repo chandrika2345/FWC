@@ -1,0 +1,42 @@
+We show how to interface an Arduino to a $16 \times 2$ LCD display using AVR-GCC.  This framework provides a useful platform for displaying the output of AVR-Assembly programs.
+%
+\begin{enumerate}[label=\arabic*.,ref=\theenumi]
+	\item  The required components are listed in 
+\tabref{tab:avr-gcc/lcd/components}
+\begin{table}[H]
+\input{avr-gcc/lcd/figs/components.tex}
+\caption{}
+\label{tab:avr-gcc/lcd/components}
+\end{table}
+\item Plug the LCD in Fig. \ref{fig:avr-gcc/lcd/lcd} to the breadboard.
+\item Connect the Arduino pins to LCD pins as per Table \ref{table:lcd pins}.
+%
+\begin{figure}[H]
+	\centering
+\resizebox {0.75\columnwidth} {!} {
+\input{avr-gcc/lcd/figs/lcd.tex}
+}
+\caption{LCD}
+\label{fig:avr-gcc/lcd/lcd}
+\end{figure}
+%
+\begin{table}[H]
+	\centering
+	\caption{Arduino to LCD Pin Connection.}             %\\	%
+\input{avr-gcc/lcd/figs/table.tex}
+\label{table:lcd pins}
+\end{table}
+\item Execute
+%
+\begin{lstlisting}
+cd avr-gcc/lcd/codes
+make
+\end{lstlisting}
+\item Modify the above code to display a string.
+\item Modify the above code to obtain a decade counter so that the numbers from 0 to 9 are displayed on the lcd repeatedly.
+\item Repeat the above exercies to display a string on the first line and a number on the second line of the lcd.
+\item Write assembly routines for driving the lcd.
+\end{enumerate}
+%
+
+
