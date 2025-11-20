@@ -1,0 +1,32 @@
+This manual shows how to use the Atmega328p internal memory for a decade counter through a loop.
+\begin{enumerate}[label=\arabic*.,ref=\theenumi]
+\item Exectute the following code by connecting the Arduino to 7447 through pins 2,3,4,5. The seven segment display should be connected to 7447.
+\begin{lstlisting}
+assembly/memory/codes/mem.asm
+\end{lstlisting}
+\item Explain the following instructions
+\begin{lstlisting}
+ldi xl,0x00
+ldi xh,0x01
+ldi r16,0b00000000
+st x,r16
+\end{lstlisting}
+\solution X=R27:R26, Y=R29:R28, and Z=R31:R30 where R27:R26 represents XH:XL. The above instructions load 0b00000000 into
+the memory location X=0x0100.
+\item What does the \textbf{loop\_cnt} routine do?
+\begin{lstlisting}
+ldi r16,0b00000000
+ldi r17,0x09
+loop_cnt:
+inc r16
+inc xl
+st x,r16
+dec r17
+brne loop_cnt
+\end{lstlisting}
+\solution The routine loads the numbers 1-9 in memory locations 0x0101 - 0x0109.
+
+\item Revise your code by using a timer for giving the delay.
+\end{enumerate}
+
+

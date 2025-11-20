@@ -1,0 +1,36 @@
+We show how to program the 7447 BCD-Seven segment
+display decoder through AVR-Assembly.
+%
+\begin{enumerate}[label=\arabic*.,ref=\theenumi]
+\item Connect the 7447 IC to the seven segment display.
+\item Make connections between the 7447 and the arduino according to 
+\tabref{table:7447_ard}.
+\item Execute the following program.  The number 5 will be displayed.
+\begin{lstlisting}
+assembly/7447/io/codes/op_7447.asm
+\end{lstlisting}
+\item Now generate the numbers 0-9 by modifying the above program.
+%
+\item Execute the following program after making the connections in Table \ref{table:assembly/7447/io/ip_7447_ard}.  The number 3 will be displayed. What does the program do?
+\begin{lstlisting}
+assembly/7447/io/codes/ip_7447.asm
+\end{lstlisting}
+%
+\begin{table}[H]
+\centering
+\input{./assembly/7447/io/figs/ip_7447_ard.tex}
+\caption{}
+\label{table:assembly/7447/io/ip_7447_ard}
+\end{table}
+\solution The program reads from pins 10-13 and displays the equivalent decimal value on the display by writing to pins 2-5 of the arduino.
+\item Explain the following instructions
+\begin{lstlisting}
+	ldi r17, 0b11000011 ; identifying input pins 10,11,12,13
+	ldi r17, 0b11111111 ;
+	out PORTB,r17		; 
+	in r17,PINB
+\end{lstlisting}
+\solution First define pins 10,11,12 and 13 as input pins. Then ensure that these pins have the input 1 by default. Load the inputs from the pins in port B (which includes pins 10-13) into R17.
+\end{enumerate}
+
+

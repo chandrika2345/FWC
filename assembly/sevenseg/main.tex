@@ -1,0 +1,45 @@
+
+%\input{chapter1}
+%
+We show how to control
+a seven segment display through AVR-Assembly.
+%
+\begin{enumerate}[label=\arabic*.,ref=\theenumi]
+	\item See Table
+\ref{table:components}
+for components.
+\item Complete   Table \ref{table:pinmap} 
+for all the digital pins using Fig. \ref{fig:assembly/sevenseg/Atmega168PinMap2}.
+%
+\begin{table}[H]
+	\centering
+\input{assembly/sevenseg/figs/pinmap.tex}
+\caption{}
+\label{table:pinmap}
+\end{table}
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=0.75\columnwidth]{assembly/sevenseg/figs/Atmega168PinMap2}
+\end{center}
+\caption{}
+\label{fig:assembly/sevenseg/Atmega168PinMap2}
+\end{figure}
+%
+\item Make connections according to Table \ref{table:assembly/sevenseg/ass_arduinoport}.
+%
+\begin{table}[H]
+\centering
+\input{./assembly/sevenseg/figs/ass_arduinoport}
+\caption{}
+\label{table:assembly/sevenseg/ass_arduinoport}
+\end{table}
+\item Execute the following code.  The number 2 should be displayed.
+%	\lstinputlisting{
+	\begin{lstlisting}
+assembly/sevenseg/codes/sevenseg.asm
+	\end{lstlisting}
+\item Now generate the numbers 0-9 by modifying the above program.
+\end{enumerate}
+%
+
+

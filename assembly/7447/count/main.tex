@@ -1,0 +1,49 @@
+%
+We show how to program the 7447 BCD-Seven segment
+display decoder through AVR-Assembly.
+
+%
+\begin{enumerate}[label=\arabic*.,ref=\theenumi]
+\item Verify the AND,OR and XOR operations in assembly using the following code and making pin connections according to 
+	%Table \ref{table:assembly/7447/count/7447_ard}.
+\tabref{table:7447_ard}
+\begin{lstlisting}
+assembly/7447/count/codes/and_or_xor.asm
+\end{lstlisting}
+%
+\item Suppose R20=0b00000010, R16=0b00000001.  Explain the following routine
+\begin{lstlisting}
+loopw:	lsl r16			;left shift
+	dec r20			;counter --
+	brne	loopw	;if counter != 0
+	ret
+\end{lstlisting}
+\solution The routine shifts R16 by 2 bits to the left (the count in R20=2).  At the end of the routine, R16=0b00000100.
+\item What do the following instructions do?
+\begin{lstlisting}
+rcall loopw		
+out PORTD,r16		;writing output to pins 2,3,4,5
+\end{lstlisting}
+\solution \textbf{rcall} calls for execution of the \textbf{loopw} routine, which shifts R16 by 2 bits to the left and writes R16 to the display through PORTD.
+\item Use the following  routine for finding the complement of a number.
+\begin{lstlisting}
+assembly/7447/count/codes/complement.asm
+\end{lstlisting}
+\item Write an assembly program for implementing the following equations. Note that ZYXW is the input nibble and DCBA is the output nibble.  Display DCBA on the seven segment display for each input ZYXW from 0-9.
+%
+\begin{align}
+A &= W^{\prime}
+\\
+B &= WX^{\prime} Z^{\prime} + W^{\prime}X
+\\
+C &= WXY^{\prime}+X^{\prime}Y + W^{\prime}Y
+\\
+D &= WXY + W^{\prime}Z
+\end{align}
+%
+\item Repeat the above exercise by getting ZYXW as manual inputs to the arduino from the GND and 5V pins on the breadboard.
+%
+\end{enumerate}
+%
+
+

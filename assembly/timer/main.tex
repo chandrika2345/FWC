@@ -1,0 +1,89 @@
+We show how to use the Atmega328p timer to blink the builtin led with a delay.
+\begin{enumerate}[label=\arabic*.,ref=\theenumi]
+\item Connect the Arduino to the computer and execute the following code
+\begin{lstlisting}
+assembly/timer/codes/timer.asm
+\end{lstlisting}
+
+\item Explain the following instruction
+\begin{lstlisting}
+sbi DDRB, 5
+\end{lstlisting}
+\item What do the following instructions do?
+\begin{lstlisting}
+ldi r16, 0b00000101 
+out TCCR0B, r16 
+\end{lstlisting}
+\solution The system clock (SYSCLK) frequency of the Atmega328p is 16 MHz.  TCCR0B is the Timer Counter Control Register.  When 
+\begin{align}
+TCCR0B&=0b101 \\
+\implies CLK &= \frac{SYSCLK}{1024} \\
+&= \frac{16M}{1K} = 16kHz.
+\end{align}
+\item Explain the PAUSE routine.
+\begin{lstlisting}
+ldi r19, 0b01000000 ;times to run the loop = 64 for 1 second delay
+PAUSE:	;this is delay (function)
+lp2:	;loop runs 64 times
+		IN r16, TIFR0 ;tifr is timer interupt flag (8 bit timer runs 256 times)
+		ldi r17, 0b00000010
+		AND r16, r17 ;need second bit
+		BREQ PAUSE 
+		OUT TIFR0, r17	;set tifr flag high
+	dec r19
+	brne lp2
+	ret
+\end{lstlisting}
+\solution TIFR0 is the timer interrupt flag and TIFR0=0bxxxxxx10 after every 256 cycles. PAUSE routine waits till TIFR0=0bxxxxxx10, this checking is done by the AND and BREQ instructions above.  
+\item Explain the lp2 routine.
+\\
+\solution R19 = 64 and is used as a count for lp2. The lp2 routine returns after 64 PAUSE rutines.
+\item What is the blinking delay?
+\\
+\solution The blinking delay is given by
+\begin{align}
+delay &= \frac{CLK}{lp2\times PAUSE} seconds
+\\
+& = \frac{16 \times 1024}{64 \times 256} seconds = 1 second
+\end{align}
+\end{enumerate}
+%
+\subsection{Blink through Cycle Delays}
+\begin{enumerate}[label=\arabic*.,ref=\theenumi]
+\item Connect pin 8 of the Arduino to an led and execute the following code
+\begin{lstlisting}
+assembly/timer/codes/cycle_delay.asm
+\end{lstlisting}
+\item Explain how the delay is obained
+\begin{lstlisting}
+    ldi r16,0x50
+    ldi r17,0x00
+    ldi r18,0x00
+
+w0:
+    dec r18
+    brne w0
+    dec r17
+    brne w0
+    dec r16
+    brne w0
+    pop r18
+    pop r17
+    pop r16
+    ret
+\end{lstlisting}
+\solution The w0 loop is executed using the counts in R16=$2^6+2^4 = 80$, R17=R18=$2^8=256$.  Thus 
+\begin{align}
+delay &\approx 80\times256\times256 cycles
+\\
+&= \frac{80\times256\times256 }{2^4 \times 2^20} seconds
+\\
+&=0.3125 seconds
+\end{align}
+The actual time is slightly more since each instruction takes a few cycles to execute. 
+\item Should you use timer delay or cycle delay?
+\\
+\solution Timer delay is an accurate method for giving delays.  Cycle delay is a crude method and should be avoided.  
+\end{enumerate}
+
+
